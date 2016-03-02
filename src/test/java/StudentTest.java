@@ -25,8 +25,8 @@ public class StudentTest {
       public void save_savesIntoDatabase_true() {
       Student myStudent = new Student("Sam Student", 2016, 1, 1);
       myStudent.save();
-      System.out.println((Student.all().get(0).getEnrollmentDate()));
-      assertTrue(Student.all().get(0).getEnrollmentDate() instanceof String); //equals(myStudent.getEnrollmentDate()));
+      System.out.println((Student.all().get(0).toString()));
+      assertEquals(Student.all().get(0).toString(),  myStudent.getEnrollmentDate()); //equals(myStudent.getEnrollmentDate()));
     }
 
 //   @Test

@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 import org.sql2o.*;
 import java.time.LocalDate;
 import java.sql.Date;
@@ -27,11 +27,16 @@ public class Student {
     return enrollment_date.toString();
   }
 
-  public static List<Student> all() {
-    String sql = "SELECT id, name, enrollment_date FROM Students";
+  public static List<LocalDate> all() {
+    String sql = "SELECT enrollment_date FROM Students";
     try(Connection con = DB.sql2o.open()) {
 
-      return con.createQuery(sql).executeAndFetch(Student.class);
+      List<Date> sqlDates = con.createQuery(sql).executeAndFetch(java.sql.Date.class);
+      ArrayList<LocalDate> locdate = new ArrayList();
+      for (Date date : sqlDates) {
+        locdate.add(date.toLocalDate());
+      }
+      return locdate;
       // List<Student> tmp = con.createQuery(sql).executeAndFetch(Student.class);
       // for (Student student : tmp) {
       //   student.enrollment_date = student.enrollment_date.toLocalDate();
