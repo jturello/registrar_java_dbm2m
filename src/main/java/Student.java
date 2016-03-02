@@ -30,7 +30,13 @@ public class Student {
   public static List<Student> all() {
     String sql = "SELECT id, name, enrollment_date FROM Students";
     try(Connection con = DB.sql2o.open()) {
+
       return con.createQuery(sql).executeAndFetch(Student.class);
+      // List<Student> tmp = con.createQuery(sql).executeAndFetch(Student.class);
+      // for (Student student : tmp) {
+      //   student.enrollment_date = student.enrollment_date.toLocalDate();
+      // }
+      // return tmp;
     }
   }
 
@@ -40,7 +46,7 @@ public class Student {
     String sql = "INSERT INTO Students (name, enrollment_date) VALUES (:name, :enrollment_date)";
     this.id = (int) con.createQuery(sql, true)
       .addParameter("name", this.name)
-      .addParameter("enrollment_date", Date.valueOf(this.enrollment_date))
+      .addParameter("enrollment_date", Date.valueOf(enrollment_date))
       .executeUpdate()
       .getKey();
   }
